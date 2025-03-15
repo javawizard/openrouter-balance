@@ -43,7 +43,10 @@ The extension is now fully functional with:
 ### User Experience
 1. Make status bar item clickable
    - Add click handler for manual refresh
-   - Consider adding context menu options
+   - Added context menu options:
+     * Refresh Balance
+     * Open Settings
+     * Top Up Balance
 
 ### Polishing
 1. Add proper error handling and user feedback

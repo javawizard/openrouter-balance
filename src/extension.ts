@@ -21,6 +21,16 @@ export function activate(context: vscode.ExtensionContext) {
                 label: '$(sync) Refresh Balance',
                 description: 'Manually refresh the current balance',
                 command: 'openrouter-balance.refreshBalance'
+            },
+            {
+                label: '$(gear) Open Settings',
+                description: 'Open extension settings',
+                command: 'openrouter-balance.openSettings'
+            },
+            {
+                label: '$(credit-card) Top Up Balance',
+                description: 'Open OpenRouter credits page',
+                command: 'openrouter-balance.openTopUpPage'
             }
         ]).then(selection => {
             if (selection?.command) {
@@ -38,6 +48,18 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(statusBarItem);
     context.subscriptions.push(disposable);
+
+    // Register top-up page command
+    let topUpDisposable = vscode.commands.registerCommand('openrouter-balance.openTopUpPage', () => {
+        vscode.env.openExternal(vscode.Uri.parse('https://openrouter.ai/settings/credits'));
+    });
+    context.subscriptions.push(topUpDisposable);
+
+    // Register settings command
+    let settingsDisposable = vscode.commands.registerCommand('openrouter-balance.openSettings', () => {
+        vscode.commands.executeCommand('workbench.action.openSettings', '@ext:undefined_publisher.openrouter-balance');
+    });
+    context.subscriptions.push(settingsDisposable);
 
     // Initial refresh with retry
     const tryRefresh = async (attempt = 1) => {
