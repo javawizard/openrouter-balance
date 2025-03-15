@@ -57,7 +57,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Register settings command
     let settingsDisposable = vscode.commands.registerCommand('openrouter-balance.openSettings', () => {
-        vscode.commands.executeCommand('workbench.action.openSettings', '@ext:undefined_publisher.openrouter-balance');
+        vscode.commands.executeCommand('workbench.action.openSettings', '@ext:javawizard.openrouter-balance');
     });
     context.subscriptions.push(settingsDisposable);
 
@@ -73,7 +73,7 @@ export function activate(context: vscode.ExtensionContext) {
     };
 
     // Check if API key is available before refreshing
-    const config = vscode.workspace.getConfiguration('openrouter');
+    const config = vscode.workspace.getConfiguration('openrouter-balance');
     if (config.get<string>('apiKey')) {
         tryRefresh();
     } else {
@@ -85,7 +85,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (refreshInterval) {
             clearInterval(refreshInterval);
         }
-        const refreshIntervalSeconds = vscode.workspace.getConfiguration('openrouter').get<number>('refreshInterval', 300);
+        const refreshIntervalSeconds = vscode.workspace.getConfiguration('openrouter-balance').get<number>('refreshInterval', 300);
         if (refreshIntervalSeconds > 0) {
             refreshInterval = setInterval(() => {
                 refreshBalance(false).catch(err => {
@@ -100,8 +100,11 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Listen for configuration changes
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
-        if (e.affectsConfiguration('openrouter.refreshInterval')) {
+        if (e.affectsConfiguration('openrouter-balance.refreshInterval')) {
             setupRefreshInterval();
+        }
+        if (e.affectsConfiguration('openrouter-balance.apiKey')) {
+            refreshBalance(true);
         }
     }));
 }
@@ -111,7 +114,7 @@ async function refreshBalance(isManualRefresh = true) {
         statusBarItem.text = '$(loading~spin) Loading balance...';
     }
     try {
-        const apiKey = vscode.workspace.getConfiguration('openrouter').get<string>('apiKey');
+        const apiKey = vscode.workspace.getConfiguration('openrouter-balance').get<string>('apiKey');
         if (!apiKey) {
             statusBarItem.text = '$(error) API key not set';
             vscode.window.showErrorMessage('OpenRouter API key is not configured. Please set it in settings.');

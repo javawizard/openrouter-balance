@@ -4,6 +4,7 @@
     "url": "https://github.com/javawizard/openrouter-balance"
   },
   "name": "openrouter-balance",
+  "publisher": "javawizard",
   "displayName": "OpenRouter Balance",
   "description": "Keep an eye on your remaining OpenRouter balance",
   "version": "0.0.1",
@@ -27,12 +28,12 @@
     "configuration": {
       "title": "OpenRouter Balance",
       "properties": {
-        "openrouter.apiKey": {
+        "openrouter-balance.apiKey": {
           "type": "string",
           "description": "Your OpenRouter API key",
           "scope": "application"
         },
-        "openrouter.refreshInterval": {
+        "openrouter-balance.refreshInterval": {
           "type": "number",
           "default": 300,
           "description": "Interval in seconds for automatic balance updates",

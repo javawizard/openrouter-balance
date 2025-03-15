@@ -38,7 +38,12 @@ The extension is now fully functional with:
    - Consider configurable update interval
 
 ### Core Features
-2. Implement balance threshold notifications
+2. ✅ Implement balance refresh on API key change
+   - Added listener for API key configuration changes
+   - Automatically refreshes balance when API key is updated
+
+### Core Features
+3. Implement balance threshold notifications
 
 ### User Experience
 1. Make status bar item clickable
@@ -76,4 +81,9 @@ The extension is now fully functional with:
 ### Deployment
 1. Add proper LICENSE file
 2. Add repository field to package.json
+
+## 2025-03-15
+- Added publisher 'javawizard' to package.json
+
+- Updated publisher reference in extension.ts from 'undefined_publisher' to 'javawizard'
 3. Prepare for marketplace publication
