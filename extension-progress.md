@@ -1,3 +1,14 @@
+### 2025-03-15
+- Changed refresh interval setting from milliseconds to seconds
+  - Updated package.json configuration
+  - Modified extension.ts to handle seconds
+  - Tested and verified functionality
+- Modified loading indicator behavior
+  - Loading spinner now only shows during manual refreshes
+  - Automatic refreshes no longer show loading state
+  - Added isManualRefresh parameter to refreshBalance function
+
+
 # OpenRouter Balance Extension Progress
 
 ## Steps Taken
@@ -16,6 +27,7 @@ The extension is now fully functional with:
 - Manual refresh capability
 - Secure API key storage
 - Basic error handling
+- Improved loading indicator behavior
 
 ## Next Steps
 
@@ -35,7 +47,14 @@ The extension is now fully functional with:
 
 ### Polishing
 1. Add proper error handling and user feedback
-2. Implement loading states
+### Error Handling Improvements
+- Updated error handling to show "Balance: $-.--" when balance loading fails
+- Added specific error messages for different error types:
+  - Invalid API key
+  - Too many requests
+  - Request timeout
+  - General errors
+2. ✅ Implement loading states
 3. Add configuration options for:
    - Update frequency
    - Status bar display format

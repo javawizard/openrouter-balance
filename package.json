@@ -14,7 +14,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:openrouter-balance.refreshBalance"
+    "onStartupFinished"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -34,8 +34,8 @@
         },
         "openrouter.refreshInterval": {
           "type": "number",
-          "default": 300000,
-          "description": "Interval in milliseconds for automatic balance updates",
+          "default": 300,
+          "description": "Interval in seconds for automatic balance updates",
           "scope": "application"
         }
       }

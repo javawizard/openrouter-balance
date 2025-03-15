@@ -11,6 +11,9 @@ export function activate(context: vscode.ExtensionContext) {
     statusBarItem.command = 'openrouter-balance.showMenu';
     statusBarItem.show();
 
+    // Add status bar item to subscriptions to ensure proper cleanup
+    context.subscriptions.push(statusBarItem);
+
     // Register menu command
     let menuDisposable = vscode.commands.registerCommand('openrouter-balance.showMenu', () => {
         vscode.window.showQuickPick([
@@ -30,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Register refresh command
     let disposable = vscode.commands.registerCommand('openrouter-balance.refreshBalance', async () => {
-        await refreshBalance();
+        await refreshBalance(true);
     });
 
     context.subscriptions.push(statusBarItem);
@@ -39,7 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Initial refresh with retry
     const tryRefresh = async (attempt = 1) => {
         try {
-            await refreshBalance();
+            await refreshBalance(false);
         } catch (error) {
             if (attempt < 3) {
                 setTimeout(() => tryRefresh(attempt + 1), 1000 * attempt);
@@ -56,18 +59,35 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     // Set up automatic refresh
-    const refreshIntervalMs = vscode.workspace.getConfiguration('openrouter').get<number>('refreshInterval', 300000);
-    if (refreshIntervalMs > 0) {
-        refreshInterval = setInterval(() => {
-            refreshBalance().catch(err => {
-                console.error('Error during automatic refresh:', err);
-            });
-        }, refreshIntervalMs);
-    }
+    const setupRefreshInterval = () => {
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+        }
+        const refreshIntervalSeconds = vscode.workspace.getConfiguration('openrouter').get<number>('refreshInterval', 300);
+        if (refreshIntervalSeconds > 0) {
+            refreshInterval = setInterval(() => {
+                refreshBalance(false).catch(err => {
+                    console.error('Error during automatic refresh:', err);
+                });
+            }, refreshIntervalSeconds * 1000);
+        }
+    };
+
+    // Initial setup
+    setupRefreshInterval();
+
+    // Listen for configuration changes
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
+        if (e.affectsConfiguration('openrouter.refreshInterval')) {
+            setupRefreshInterval();
+        }
+    }));
 }
 
-async function refreshBalance() {
-    statusBarItem.text = '$(loading~spin) Loading balance...';
+async function refreshBalance(isManualRefresh = true) {
+    if (isManualRefresh) {
+        statusBarItem.text = '$(loading~spin) Loading balance...';
+    }
     try {
         const apiKey = vscode.workspace.getConfiguration('openrouter').get<string>('apiKey');
         if (!apiKey) {
@@ -93,8 +113,25 @@ async function refreshBalance() {
         statusBarItem.text = `$(credit-card) Balance: $${balance.toFixed(2)}`;
     } catch (error) {
         console.error('Error fetching balance:', error);
-        statusBarItem.text = '$(error) Failed to load balance';
-        vscode.window.showErrorMessage('Failed to fetch OpenRouter balance. Check the console for details.');
+        statusBarItem.text = '$(error) Balance: $-.--';
+
+        let errorMessage = 'Failed to fetch OpenRouter balance. ';
+
+        if (axios.isAxiosError(error)) {
+            if (error.response?.status === 401) {
+                errorMessage += 'Invalid API key. Please check your settings.';
+            } else if (error.response?.status === 429) {
+                errorMessage += 'Too many requests. Please try again later.';
+            } else {
+                errorMessage += 'Check the console for details.';
+            }
+        } else if (error instanceof Error && 'code' in error && error.code === 'ECONNABORTED') {
+            errorMessage += 'Request timed out. Please check your internet connection.';
+        } else {
+            errorMessage += 'An unexpected error occurred. Check the console for details.';
+        }
+
+        vscode.window.showErrorMessage(errorMessage);
     }
 }
 
