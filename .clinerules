@@ -1,0 +1,8 @@
+
+**Note:** After implementing each feature, ALWAYS package and install the extension for testing. Use `npx @vscode/vsce package` to package and `code --install-extension openrouter-balance-0.0.1.vsix` to install. Also, be sure to update this file with any notes on progress and any next steps.
+
+When publishing the extension, make sure to invoke vsce as `npx @vscode/vsce`.
+
+The extension code is located at `src/extension.ts`.
+
+You keep track of progress in extension-progress.md. ALWAYS read this file at the beginning of every task and ALWAYS update it at the end of the task if there is anything to note. Make sure to always read extension-progress.md at least once during each task.
