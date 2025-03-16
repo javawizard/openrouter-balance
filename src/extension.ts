@@ -2,9 +2,13 @@ import * as vscode from 'vscode';
 import axios from 'axios';
 
 let statusBarItem: vscode.StatusBarItem;
+let outputChannel: vscode.OutputChannel;
 let refreshInterval: NodeJS.Timeout | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
+    // Create output channel
+    outputChannel = vscode.window.createOutputChannel('OpenRouter Balance');
+    outputChannel.appendLine('Extension activated.');
     // Create status bar item with menu
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     statusBarItem.text = '$(loading~spin) Loading balance...';
@@ -110,6 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Refresh balance whenever any file is saved
     context.subscriptions.push(vscode.workspace.onDidSaveTextDocument(() => {
+        outputChannel.appendLine('OpenRouter balance refreshed due to file save.');
         refreshBalance(false);
     }));
 }

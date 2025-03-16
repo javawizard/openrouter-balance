@@ -33,6 +33,8 @@ The extension is now fully functional with:
 - Automatic balance updates
 - Balance refresh on API key change
 - Automatic balance update on file save
+- Added logging for balance refresh on file save using an output channel
+- Added message to output channel on extension activation
 - Configurable update frequency (in seconds)
 - Repository information in package.json
 - Publisher information configured
