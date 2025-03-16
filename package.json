@@ -22,7 +22,19 @@
     "commands": [
       {
         "command": "openrouterBalance.refreshBalance",
-        "title": "Refresh OpenRouter Balance"
+        "title": "OpenRouter Balance: Refresh Balance"
+      },
+      {
+        "command": "openrouterBalance.openSettings",
+        "title": "OpenRouter Balance: Open Settings"
+      },
+      {
+        "command": "openrouterBalance.openTopUpPage",
+        "title": "OpenRouter Balance: Top Up Balance"
+      },
+      {
+        "command": "openrouterBalance.showOutput",
+        "title": "OpenRouter Balance: Show Output"
       }
     ],
     "configuration": {

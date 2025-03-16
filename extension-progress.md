@@ -24,6 +24,9 @@
 15. Added a menu item to the status bar menu that automatically switches to the output channel in vscode's output view
 16. Logged errors that occur during refresh to the output channel
 17. Removed all console.log and console.error statements, replacing them with outputChannel logging for better user experience and debugging
+18. Modified the "auto refresh the balance on file save" logic so that it only refreshes the balance if the saved file is in the current workspace.
+19. Added a setting to enable or disable the "automatic refresh on file save" behavior.
+20. Made all status bar menu items available as commands in the command palette.
 
 ## Current Status
 
@@ -38,15 +41,17 @@ The extension is now fully functional with:
 - Balance refresh on API key change
 - Automatic balance update on file save
 - Logging system using VSCode output channel
-  - Balance refresh events with reasons
-  - Error logging
-  - Extension activation message
+    - Balance refresh events with reasons
+    - Error logging
+    - Extension activation message
 - Menu option to view logs in output channel
 - Configurable update frequency (in seconds)
 - Repository information in package.json
 - Publisher information configured
-17. Modified the "auto refresh the balance on file save" logic so that it only refreshes the balance if the saved file is in the current workspace.
-18. Added a setting to enable or disable the "automatic refresh on file save" behavior.
+- Modified the "auto refresh the balance on file save" logic so that it only refreshes the balance if the saved file is in the current workspace.
+- Added a setting to enable or disable the "automatic refresh on file save" behavior.
+- Made all status bar menu items available as commands in the command palette.
+- Added "OpenRouter Balance:" prefix to commands in the command palette.
 
 ## Next Steps
 
@@ -70,3 +75,6 @@ The extension is now fully functional with:
 
 ### Deployment
 1. Prepare for marketplace publication
+1. Prepare for marketplace publication
+    - Update command names in package.json
+
