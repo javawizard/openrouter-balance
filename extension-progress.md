@@ -45,6 +45,8 @@ The extension is now fully functional with:
 - Configurable update frequency (in seconds)
 - Repository information in package.json
 - Publisher information configured
+17. Modified the "auto refresh the balance on file save" logic so that it only refreshes the balance if the saved file is in the current workspace.
+18. Added a setting to enable or disable the "automatic refresh on file save" behavior.
 
 ## Next Steps
 

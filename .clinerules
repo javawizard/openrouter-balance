@@ -6,3 +6,5 @@ When publishing the extension, make sure to invoke vsce as `npx @vscode/vsce`.
 The extension code is located at `src/extension.ts`.
 
 You keep track of progress in extension-progress.md. ALWAYS read this file at the beginning of every task and ALWAYS update it at the end of the task if there is anything to note. Make sure to always read extension-progress.md at least once during each task.
+
+If I ask you to commit changes, please use `git diff` and `git status` to check what's changed, then provide a brief summary in the commit message when you run `git commit`.

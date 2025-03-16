@@ -39,6 +39,13 @@
           "default": 300,
           "description": "Interval in seconds for automatic balance updates",
           "scope": "application"
+        },
+        "openrouterBalance.autoRefreshOnFileSave": {
+          "type": "boolean",
+          "title": "OpenRouter Balance: Auto Refresh on File Save",
+          "default": true,
+          "description": "Enable or disable automatic balance refresh when a file is saved in the workspace.",
+          "scope": "application"
         }
       }
     }

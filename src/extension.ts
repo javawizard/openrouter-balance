@@ -118,8 +118,11 @@ export function activate(context: vscode.ExtensionContext) {
     }));
 
     // Refresh balance whenever any file is saved
-    context.subscriptions.push(vscode.workspace.onDidSaveTextDocument(() => {
-        refreshBalance(false, 'file save');
+    context.subscriptions.push(vscode.workspace.onDidSaveTextDocument(document => {
+        const autoRefreshOnFileSave = vscode.workspace.getConfiguration('openrouterBalance').get<boolean>('autoRefreshOnFileSave', true);
+        if (autoRefreshOnFileSave && vscode.workspace.getWorkspaceFolder(document.uri)) {
+            refreshBalance(false, 'file save');
+        }
     }));
 }
 
