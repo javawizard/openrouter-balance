@@ -32,6 +32,7 @@ The extension is now fully functional with:
 - Clickable status bar item with menu
 - Automatic balance updates
 - Balance refresh on API key change
+- Automatic balance update on file save
 - Configurable update frequency (in seconds)
 - Repository information in package.json
 - Publisher information configured

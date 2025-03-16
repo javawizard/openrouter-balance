@@ -107,6 +107,11 @@ export function activate(context: vscode.ExtensionContext) {
             refreshBalance(true);
         }
     }));
+
+    // Refresh balance whenever any file is saved
+    context.subscriptions.push(vscode.workspace.onDidSaveTextDocument(() => {
+        refreshBalance(false);
+    }));
 }
 
 async function refreshBalance(isManualRefresh = true) {
