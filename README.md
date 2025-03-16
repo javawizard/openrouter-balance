@@ -10,6 +10,8 @@ I'm honestly impressed; it's totally functional and DeepSeek V3 actually did qui
 
 2025 is going to be an exciting year.
 
+**UPDATE 3/15/2025: I've been experimenting with Gemini 2.0 Flash.** Cheaper than DeepSeek V3, *way* faster, and the code quality seems roughly similar. Not anywhere near Claude 3.7 but at 1/30th the price it's *well* worth the cost.
+
 The rest of the README is maintained by DeepSeek and Claude.
 
 ## Features
