@@ -43,6 +43,8 @@ The extension is now fully functional with:
 
 ### Core Features
 1. Implement balance threshold notifications
+2. Added logging for all refreshes to the output channel, along with the reason why the refresh happened, and made the balance refresh reason mandatory and added a reason everywhere it's called.
+3. Added a menu item to the status bar menu that automatically switches to the output channel in vscode's output view.
 
 ### Polishing
 1. Add configuration options for:

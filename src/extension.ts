@@ -35,6 +35,11 @@ export function activate(context: vscode.ExtensionContext) {
                 label: '$(credit-card) Top Up Balance',
                 description: 'Open OpenRouter credits page',
                 command: 'openrouterBalance.openTopUpPage'
+            },
+            {
+                label: '$(output) Show Output',
+                description: 'Show OpenRouter Balance extension output',
+                command: 'openrouterBalance.showOutput'
             }
         ]).then(selection => {
             if (selection?.command) {
@@ -47,7 +52,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Register refresh command
     let disposable = vscode.commands.registerCommand('openrouterBalance.refreshBalance', async () => {
-        await refreshBalance(true);
+        await refreshBalance(true, 'manual refresh');
     });
 
     context.subscriptions.push(statusBarItem);
@@ -68,7 +73,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Initial refresh with retry
     const tryRefresh = async (attempt = 1) => {
         try {
-            await refreshBalance(false);
+            await refreshBalance(false, 'initial refresh');
         } catch (error) {
             if (attempt < 3) {
                 setTimeout(() => tryRefresh(attempt + 1), 1000 * attempt);
@@ -92,7 +97,7 @@ export function activate(context: vscode.ExtensionContext) {
         const refreshIntervalSeconds = vscode.workspace.getConfiguration('openrouterBalance').get<number>('refreshInterval', 300);
         if (refreshIntervalSeconds > 0) {
             refreshInterval = setInterval(() => {
-                refreshBalance(false).catch(err => {
+                refreshBalance(false, 'automatic refresh').catch(err => {
                     console.error('Error during automatic refresh:', err);
                 });
             }, refreshIntervalSeconds * 1000);
@@ -108,20 +113,28 @@ export function activate(context: vscode.ExtensionContext) {
             setupRefreshInterval();
         }
         if (e.affectsConfiguration('openrouterBalance.apiKey')) {
-            refreshBalance(true);
+            refreshBalance(true, 'API key change');
         }
     }));
 
     // Refresh balance whenever any file is saved
     context.subscriptions.push(vscode.workspace.onDidSaveTextDocument(() => {
         outputChannel.appendLine('OpenRouter balance refreshed due to file save.');
-        refreshBalance(false);
+        refreshBalance(false, 'file save');
     }));
 }
 
-async function refreshBalance(isManualRefresh = true) {
+async function refreshBalance(isManualRefresh = true, reason: string) {
     if (isManualRefresh) {
         statusBarItem.text = '$(loading~spin) Loading balance...';
+    }
+    // Log the refresh to the output channel
+    if (reason) {
+        outputChannel.appendLine(`Balance refreshed. Reason: ${reason}`);
+    } else if (isManualRefresh) {
+        outputChannel.appendLine('Balance refreshed manually.');
+    } else {
+        outputChannel.appendLine('Balance refreshed automatically.');
     }
     try {
         const apiKey = vscode.workspace.getConfiguration('openrouterBalance').get<string>('apiKey');
@@ -169,6 +182,10 @@ async function refreshBalance(isManualRefresh = true) {
         vscode.window.showErrorMessage(errorMessage);
     }
 }
+// Command to show the output channel
+let showOutputDisposable = vscode.commands.registerCommand('openrouterBalance.showOutput', () => {
+    outputChannel.show(true);
+});
 
 export function deactivate() {
     if (refreshInterval) {
