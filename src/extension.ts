@@ -98,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (refreshIntervalSeconds > 0) {
             refreshInterval = setInterval(() => {
                 refreshBalance(false, 'automatic refresh').catch(err => {
-                    console.error('Error during automatic refresh:', err);
+                    outputChannel.appendLine(`Error during automatic refresh: ${err}`);
                 });
             }, refreshIntervalSeconds * 1000);
         }
@@ -119,7 +119,6 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Refresh balance whenever any file is saved
     context.subscriptions.push(vscode.workspace.onDidSaveTextDocument(() => {
-        outputChannel.appendLine('OpenRouter balance refreshed due to file save.');
         refreshBalance(false, 'file save');
     }));
 }
@@ -129,13 +128,7 @@ async function refreshBalance(isManualRefresh = true, reason: string) {
         statusBarItem.text = '$(loading~spin) Loading balance...';
     }
     // Log the refresh to the output channel
-    if (reason) {
-        outputChannel.appendLine(`Balance refreshed. Reason: ${reason}`);
-    } else if (isManualRefresh) {
-        outputChannel.appendLine('Balance refreshed manually.');
-    } else {
-        outputChannel.appendLine('Balance refreshed automatically.');
-    }
+    outputChannel.appendLine(`Refreshing balance. Reason: ${reason}`);
     try {
         const apiKey = vscode.workspace.getConfiguration('openrouterBalance').get<string>('apiKey');
         if (!apiKey) {
@@ -160,7 +153,6 @@ async function refreshBalance(isManualRefresh = true, reason: string) {
         const balance = totalCredits - totalUsage;
         statusBarItem.text = `$(credit-card) Balance: $${balance.toFixed(2)}`;
     } catch (error) {
-        console.error('Error fetching balance:', error);
         statusBarItem.text = '$(error) Balance: $-.--';
 
         let errorMessage = 'Failed to fetch OpenRouter balance. ';
@@ -180,6 +172,7 @@ async function refreshBalance(isManualRefresh = true, reason: string) {
         }
 
         vscode.window.showErrorMessage(errorMessage);
+        outputChannel.appendLine(`Error during balance refresh: ${errorMessage}`);
     }
 }
 // Command to show the output channel

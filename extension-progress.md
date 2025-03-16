@@ -20,6 +20,10 @@
     - Loading spinner now only shows during manual refreshes
     - Automatic refreshes no longer show loading state
     - Added isManualRefresh parameter to refreshBalance function
+14. Added logging for all refreshes to the output channel, along with the reason why the refresh happened, and made the balance refresh reason mandatory and added a reason everywhere it's called
+15. Added a menu item to the status bar menu that automatically switches to the output channel in vscode's output view
+16. Logged errors that occur during refresh to the output channel
+17. Removed all console.log and console.error statements, replacing them with outputChannel logging for better user experience and debugging
 
 ## Current Status
 
@@ -33,8 +37,11 @@ The extension is now fully functional with:
 - Automatic balance updates
 - Balance refresh on API key change
 - Automatic balance update on file save
-- Added logging for balance refresh on file save using an output channel
-- Added message to output channel on extension activation
+- Logging system using VSCode output channel
+  - Balance refresh events with reasons
+  - Error logging
+  - Extension activation message
+- Menu option to view logs in output channel
 - Configurable update frequency (in seconds)
 - Repository information in package.json
 - Publisher information configured
@@ -43,8 +50,6 @@ The extension is now fully functional with:
 
 ### Core Features
 1. Implement balance threshold notifications
-2. Added logging for all refreshes to the output channel, along with the reason why the refresh happened, and made the balance refresh reason mandatory and added a reason everywhere it's called.
-3. Added a menu item to the status bar menu that automatically switches to the output channel in vscode's output view.
 
 ### Polishing
 1. Add configuration options for:
