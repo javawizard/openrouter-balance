@@ -5,15 +5,16 @@ let statusBarItem: vscode.StatusBarItem;
 let outputChannel: vscode.OutputChannel;
 let refreshInterval: NodeJS.Timeout | undefined;
 
-function formatTimestamp(): string {
+function logToOutputChannel(message: string) {
     const now = new Date();
-    return now.toLocaleString();
+    const timestamp = now.toLocaleString();
+    outputChannel.appendLine(`[${timestamp}] ${message}`);
 }
 
 export function activate(context: vscode.ExtensionContext) {
     // Create output channel
     outputChannel = vscode.window.createOutputChannel('OpenRouter Balance');
-    outputChannel.appendLine(`[${formatTimestamp()}] Extension activated.`);
+    logToOutputChannel('Extension activated.');
     // Create status bar item with menu
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     statusBarItem.text = '$(loading~spin) Loading balance...';
@@ -103,7 +104,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (refreshIntervalSeconds > 0) {
             refreshInterval = setInterval(() => {
                 refreshBalance(false, 'automatic refresh').catch(err => {
-                    outputChannel.appendLine(`[${formatTimestamp()}] Error during automatic refresh: ${err}`);
+                    logToOutputChannel(`Error during automatic refresh: ${err}`);
                 });
             }, refreshIntervalSeconds * 1000);
         }
@@ -136,7 +137,7 @@ async function refreshBalance(isManualRefresh = true, reason: string) {
         statusBarItem.text = '$(loading~spin) Loading balance...';
     }
     // Log the refresh to the output channel
-    outputChannel.appendLine(`[${formatTimestamp()}] Refreshing balance. Reason: ${reason}`);
+    logToOutputChannel(`Refreshing balance. Reason: ${reason}`);
     try {
         const apiKey = vscode.workspace.getConfiguration('openrouterBalance').get<string>('apiKey');
         if (!apiKey) {
@@ -180,7 +181,7 @@ async function refreshBalance(isManualRefresh = true, reason: string) {
         }
 
         vscode.window.showErrorMessage(errorMessage);
-        outputChannel.appendLine(`[${formatTimestamp()}] Error during balance refresh: ${errorMessage}`);
+        logToOutputChannel(`Error during balance refresh: ${errorMessage}`);
     }
 }
 // Command to show the output channel

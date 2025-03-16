@@ -53,6 +53,7 @@ The extension is now fully functional with:
 - Made all status bar menu items available as commands in the command palette.
 - Added "OpenRouter Balance:" prefix to commands in the command palette.
 - Added timestamps to all messages logged to the output channel.
+21. Refactored formatTimestamp to logToOutputChannel for improved logging.
 ## Next Steps
 
 ### Core Features
