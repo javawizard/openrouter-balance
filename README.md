@@ -4,7 +4,7 @@ This Visual Studio Code extension displays your remaining OpenRouter credit bala
 
 ## Summer Vibes
 
-**This extension was 95% vibe coded with Roo Code using DeepSeek V3** with a sprinkling of Claude 3.7 when things were getting a little unfocused. This was mostly intended to be an experiment in how well vibe coding would work on DeepSeek V3.
+**This extension was 95% vibe coded with Roo Code using DeepSeek V3** with a sprinkling of Claude 3.7 when things were getting a little unfocused. This was originally intended to be an experiment in how well vibe coding would work on DeepSeek V3.
 
 I'm honestly impressed; it's totally functional and DeepSeek V3 actually did quite a good job at writing it without a ton of intervention. Every now and then I'd have to give it hints; it took a while for it to realize that there isn't a "title" property on VSCode settings contribution definitions, for example - and Claude proved to be quite a bit better at keeping extension-progress.md organized. But DeepSeek did the majority of the work.
 
