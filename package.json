@@ -33,6 +33,10 @@
         "title": "OpenRouter Balance: Top Up Balance"
       },
       {
+        "command": "openrouterBalance.openActivityPage",
+        "title": "OpenRouter Balance: View Activity"
+      },
+      {
         "command": "openrouterBalance.showOutput",
         "title": "OpenRouter Balance: Show Output"
       }

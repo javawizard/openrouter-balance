@@ -43,6 +43,11 @@ export function activate(context: vscode.ExtensionContext) {
                 command: 'openrouterBalance.openTopUpPage'
             },
             {
+                label: '$(history) View Activity',
+                description: 'Open OpenRouter activity page',
+                command: 'openrouterBalance.openActivityPage'
+            },
+            {
                 label: '$(output) Show Output',
                 description: 'Show OpenRouter Balance extension output',
                 command: 'openrouterBalance.showOutput'
@@ -69,6 +74,12 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.env.openExternal(vscode.Uri.parse('https://openrouter.ai/settings/credits'));
     });
     context.subscriptions.push(topUpDisposable);
+
+    // Register activity page command
+    let activityDisposable = vscode.commands.registerCommand('openrouterBalance.openActivityPage', () => {
+        vscode.env.openExternal(vscode.Uri.parse('https://openrouter.ai/activity'));
+    });
+    context.subscriptions.push(activityDisposable);
 
     // Register settings command
     let settingsDisposable = vscode.commands.registerCommand('openrouterBalance.openSettings', () => {

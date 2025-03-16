@@ -54,6 +54,10 @@ The extension is now fully functional with:
 - Added "OpenRouter Balance:" prefix to commands in the command palette.
 - Added timestamps to all messages logged to the output channel.
 21. Refactored formatTimestamp to logToOutputChannel for improved logging.
+22. Added a menu option and command palette command to open the OpenRouter activity page
+    - Added new command 'openrouterBalance.openActivityPage'
+    - Added menu item to the status bar menu
+    - Registered command in package.json for command palette access
 ## Next Steps
 
 ### Core Features
