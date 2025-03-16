@@ -12,44 +12,16 @@ I'm honestly impressed; it's totally functional and DeepSeek V3 actually did qui
 
 **UPDATE 3/15/2025: I've been experimenting with Gemini 2.0 Flash.** Cheaper than DeepSeek V3, *way* faster, and the code quality seems roughly similar. Not anywhere near Claude 3.7 but at 1/30th the price it's *well* worth the cost.
 
-The rest of the README is maintained by DeepSeek and Claude.
-
-## Features
-
-- Shows current OpenRouter balance in the status bar
-- Automatically refreshes balance on activation
-- Manual refresh via command palette
-- Secure API key storage in settings
-
 ## Installation
 
-1. Install the extension from the Marketplace
-2. Set your OpenRouter API key in settings
-3. The balance will appear in the status bar
+I haven't published this extension to the marketplace yet, so in the mean time you'll want to do a quick:
 
-## Usage
+```
+git clone git@github.com:javawizard/openrouter-balance
+cd openrouter-balance && npm i && npm run install:local
+```
 
-- The balance is automatically displayed in the status bar
-- Click the status bar item to manually refresh
-- Set your API key in File > Preferences > Settings > Extensions > OpenRouter Balance
+Then reload all of your Visual Studio Code windows and you're off to the races.
 
-## Requirements
+That command will package the extension as `openrouterBalance-*.vsix` as well; you can use that file directly to install it into Cursor or any other VSCode-derived IDE.
 
-- OpenRouter API key
-- Visual Studio Code 1.98.0 or higher
-
-## Extension Settings
-
-This extension contributes the following settings:
-
-* `openrouter.apiKey`: Your OpenRouter API key
-
-## Known Issues
-
-None currently
-
-## Release Notes
-
-### 0.0.1
-
-Initial release of OpenRouter Balance extension
