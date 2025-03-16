@@ -5,10 +5,15 @@ let statusBarItem: vscode.StatusBarItem;
 let outputChannel: vscode.OutputChannel;
 let refreshInterval: NodeJS.Timeout | undefined;
 
+function formatTimestamp(): string {
+    const now = new Date();
+    return now.toLocaleString();
+}
+
 export function activate(context: vscode.ExtensionContext) {
     // Create output channel
     outputChannel = vscode.window.createOutputChannel('OpenRouter Balance');
-    outputChannel.appendLine('Extension activated.');
+    outputChannel.appendLine(`[${formatTimestamp()}] Extension activated.`);
     // Create status bar item with menu
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     statusBarItem.text = '$(loading~spin) Loading balance...';
@@ -98,7 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (refreshIntervalSeconds > 0) {
             refreshInterval = setInterval(() => {
                 refreshBalance(false, 'automatic refresh').catch(err => {
-                    outputChannel.appendLine(`Error during automatic refresh: ${err}`);
+                    outputChannel.appendLine(`[${formatTimestamp()}] Error during automatic refresh: ${err}`);
                 });
             }, refreshIntervalSeconds * 1000);
         }
@@ -131,7 +136,7 @@ async function refreshBalance(isManualRefresh = true, reason: string) {
         statusBarItem.text = '$(loading~spin) Loading balance...';
     }
     // Log the refresh to the output channel
-    outputChannel.appendLine(`Refreshing balance. Reason: ${reason}`);
+    outputChannel.appendLine(`[${formatTimestamp()}] Refreshing balance. Reason: ${reason}`);
     try {
         const apiKey = vscode.workspace.getConfiguration('openrouterBalance').get<string>('apiKey');
         if (!apiKey) {
@@ -175,7 +180,7 @@ async function refreshBalance(isManualRefresh = true, reason: string) {
         }
 
         vscode.window.showErrorMessage(errorMessage);
-        outputChannel.appendLine(`Error during balance refresh: ${errorMessage}`);
+        outputChannel.appendLine(`[${formatTimestamp()}] Error during balance refresh: ${errorMessage}`);
     }
 }
 // Command to show the output channel

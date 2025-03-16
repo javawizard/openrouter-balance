@@ -52,7 +52,7 @@ The extension is now fully functional with:
 - Added a setting to enable or disable the "automatic refresh on file save" behavior.
 - Made all status bar menu items available as commands in the command palette.
 - Added "OpenRouter Balance:" prefix to commands in the command palette.
-
+- Added timestamps to all messages logged to the output channel.
 ## Next Steps
 
 ### Core Features
