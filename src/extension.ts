@@ -153,7 +153,6 @@ async function refreshBalance(isManualRefresh = true, reason: string) {
         const apiKey = vscode.workspace.getConfiguration('openrouterBalance').get<string>('apiKey');
         if (!apiKey) {
             statusBarItem.text = '$(error) API key not set';
-            vscode.window.showErrorMessage('OpenRouter API key is not configured. Please set it in settings.');
             return;
         }
 
@@ -191,7 +190,6 @@ async function refreshBalance(isManualRefresh = true, reason: string) {
             errorMessage += 'An unexpected error occurred. Check the console for details.';
         }
 
-        vscode.window.showErrorMessage(errorMessage);
         logToOutputChannel(`Error during balance refresh: ${errorMessage}`);
     }
 }

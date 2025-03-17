@@ -27,6 +27,11 @@
 18. Modified the "auto refresh the balance on file save" logic so that it only refreshes the balance if the saved file is in the current workspace.
 19. Added a setting to enable or disable the "automatic refresh on file save" behavior.
 20. Made all status bar menu items available as commands in the command palette.
+21. Refactored formatTimestamp to logToOutputChannel for improved logging.
+22. Added a menu option and command palette command to open the OpenRouter activity page
+    - Added new command 'openrouterBalance.openActivityPage'
+    - Added menu item to the status bar menu
+    - Registered command in package.json for command palette access
 
 ## Current Status
 
@@ -53,12 +58,10 @@ The extension is now fully functional with:
 - Made all status bar menu items available as commands in the command palette.
 - Added "OpenRouter Balance:" prefix to commands in the command palette.
 - Added timestamps to all messages logged to the output channel.
-21. Refactored formatTimestamp to logToOutputChannel for improved logging.
-22. Added a menu option and command palette command to open the OpenRouter activity page
-    - Added new command 'openrouterBalance.openActivityPage'
-    - Added menu item to the status bar menu
-    - Registered command in package.json for command palette access
+
 ## Next Steps
+
+23. Removed vscode.window.showErrorMessage calls from extension.ts
 
 ### Core Features
 1. Implement balance threshold notifications
@@ -82,4 +85,3 @@ The extension is now fully functional with:
 1. Prepare for marketplace publication
 1. Prepare for marketplace publication
     - Update command names in package.json
-
